@@ -1,0 +1,44 @@
+{
+  "name": "bittrex.ts",
+  "version": "0.0.1",
+  "description": "Bittrex.ts - typescript based library for the Bittrex API https://bittrex.com/",
+  "keywords": [
+    "btc",
+    "bitcoin",
+    "altcoin",
+    "bittrex",
+    "cryptocurrencies",
+    "crypto",
+    "trading"
+  ],
+  "author": "Stijn Buurman ( https://github.com/stijnbuurman )",
+  "contributors": [],
+  "license": "MIT",
+  "dependencies": {
+    "object-assign": "^4.1.1",
+    "request": ">= 2.35.0",
+    "signalr-client": "0.0.17"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stijnbuurman/bittrex.ts"
+  },
+  "main": "/dist/index.js",
+  "engines": {
+    "node": ">=6.0"
+  },
+  "bugs": {
+    "url": "https://github.com/stijnbuurman/bittrex.ts/issues",
+    "email": "stijnbuurman@gmail.com"
+  },
+  "homepage": "https://github.com/stijnbuurman/bittrex.ts",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.26",
+    "@types/object-assign": "^4.0.30",
+    "@types/request": "^2.0.3",
+    "mocha": "^3.3.0",
+  }
+}
