@@ -1,4 +1,4 @@
-import {BittrexHttpClient} from './BittrexHttpClient2';
+import {BittrexHttpClient} from './BittrexHttpClient';
 import {IApiCredentials} from './interfaces/IApiCredentials';
 import {IMarket} from './interfaces/Entities/IMarket';
 import {IResponse} from './interfaces/Responses/IResponse';
