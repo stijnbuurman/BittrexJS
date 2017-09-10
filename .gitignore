@@ -1,6 +1,7 @@
 node_modules/
 typings/
-dist/
+amd/
+dts/
+es/
+lib/
 .git/*
-.js
-!hmac-sha512.js

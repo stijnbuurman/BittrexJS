@@ -1,0 +1,7 @@
+node_modules/
+src/
+.gitignore
+gulpfile.js
+index.ts
+tsconfig.json
+typings.json

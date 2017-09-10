@@ -1,7 +1,10 @@
 {
   "name": "bittrex.ts",
-  "version": "0.0.1",
-  "description": "Bittrex.ts - typescript based library for the Bittrex API https://bittrex.com/",
+  "version": "0.0.2",
+  "description": "BittrexJS - typescript based library for the Bittrex API https://bittrex.com/",
+  "main": "lib/BittrexJS.js",
+  "jsnext:main": "es/BittrexJS.js",
+  "typings": "./dts/BittrexJS.d.ts",
   "keywords": [
     "btc",
     "bitcoin",
@@ -16,22 +19,20 @@
   "license": "MIT",
   "dependencies": {
     "object-assign": "^4.1.1",
-    "request": ">= 2.35.0",
-    "signalr-client": "0.0.17"
+    "request": ">= 2.35.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/stijnbuurman/bittrex.ts"
+    "url": "https://github.com/stijnbuurman/bittrexJS"
   },
-  "main": "/dist/index.js",
   "engines": {
     "node": ">=6.0"
   },
   "bugs": {
-    "url": "https://github.com/stijnbuurman/bittrex.ts/issues",
+    "url": "https://github.com/stijnbuurman/bittrexJS/issues",
     "email": "stijnbuurman@gmail.com"
   },
-  "homepage": "https://github.com/stijnbuurman/bittrex.ts",
+  "homepage": "https://github.com/stijnbuurman/bittrexJS",
   "scripts": {
     "test": "mocha"
   },
@@ -39,6 +40,20 @@
     "@types/node": "^8.0.26",
     "@types/object-assign": "^4.0.30",
     "@types/request": "^2.0.3",
-    "mocha": "^3.3.0"
+    "browserify": "^14.4.0",
+    "crypto-js": "^3.1.9-1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-tslint": "^8.1.2",
+    "gulp-typescript": "^3.2.2",
+    "gulp-uglify": "^3.0.0",
+    "mocha": "^3.3.0",
+    "run-sequence": "^2.1.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
