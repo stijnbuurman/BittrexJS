@@ -1,6 +1,6 @@
 {
   "name": "bittrexjs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "BittrexJS - typescript based library for the Bittrex API https://bittrex.com/",
   "main": "lib/BittrexJS.js",
   "jsnext:main": "es/BittrexJS.js",
