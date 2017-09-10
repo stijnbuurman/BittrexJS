@@ -1,7 +1,7 @@
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export interface IMarketTick {
+interface MarketTick {
     Bid: number,
     Ask: number,
     Last: number,

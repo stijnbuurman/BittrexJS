@@ -1,22 +1,4 @@
 import {BittrexHttpClient} from './BittrexHttpClient';
-import {IApiCredentials} from './interfaces/IApiCredentials';
-import {IMarket} from './interfaces/Entities/IMarket';
-import {IResponse} from './interfaces/Responses/IResponse';
-import {ICurrency} from './interfaces/Entities/ICurrency';
-import {IMarketTick} from './interfaces/Entities/IMarketTick';
-import {IMarketSummary} from './interfaces/Entities/IMarketSummary';
-import {OrderBookType} from './interfaces/Enums/OrderBookType';
-import {IOrderbook, IOrderbookEntry} from './interfaces/Entities/IOrderbook';
-import {ITrade} from './interfaces/Entities/ITrade';
-import {ICandle} from './interfaces/Entities/ICandle';
-import {IOrderReference} from './interfaces/Entities/IOrderReference';
-import {TickInterval} from './interfaces/Enums/TickInterval';
-import {IOpenOrder} from './interfaces/Entities/IOpenOrder';
-import {IBalance} from './interfaces/Entities/IBalance';
-import {IDepositAddress} from './interfaces/Entities/IDepositAddress';
-import {IDeposit} from './interfaces/Entities/IDeposit';
-import {IOrder, IOrderSingle} from './interfaces/Entities/IOrder';
-
 
 /**
  * Created by stijnbuurman on 02-09-17.
@@ -31,11 +13,11 @@ export class BittrexAPI {
     /**
      * Used to authenticate for private end points
      *
-     * @param {IApiCredentials} apiCredentials
+     * @param {ApiCredentials} apiCredentials
      *
      * @return {BittrexAPI}
      */
-    public authenticate(apiCredentials: IApiCredentials): this {
+    public authenticate(apiCredentials: ApiCredentials): this {
         this.bittrex.authenticate(apiCredentials);
         return this;
     }
@@ -43,18 +25,18 @@ export class BittrexAPI {
     /**
      * Gets all markets
      *
-     * @return {Promise<IResponse<[IMarket]>>}
+     * @return {Promise<BittrexResponse<[Market]>>}
      */
-    public getMarkets(): Promise<IResponse<[IMarket]>> {
+    public getMarkets(): Promise<BittrexResponse<Market[]>> {
         return this.bittrex.get('v1', '/public/getMarkets');
     }
 
     /**
      * Gets all currencies
      *
-     * @return {Promise<IResponse<[ICurrency]>>}
+     * @return {Promise<BittrexResponse<Currency[]>>}
      */
-    public getCurrencies(): Promise<IResponse<[ICurrency]>> {
+    public getCurrencies(): Promise<BittrexResponse<Currency[]>> {
         return this.bittrex.get('v1', '/public/getCurrencies');
     }
 
@@ -62,15 +44,15 @@ export class BittrexAPI {
      * Gets a simple tick object
      *
      * @param {string} market
-     * @return {Promise<IResponse<IMarketTick>>}
+     * @return {Promise<BittrexResponse<MarketTick>>}
      */
-    public getMarketTicker(market: string): Promise<IResponse<IMarketTick>> {
+    public getMarketTicker(market: string): Promise<BittrexResponse<MarketTick>> {
         if (!market) {
             throw Error('Invalid Market');
         }
 
         return this.bittrex.get('v1', '/public/getTicker', {
-            market: market,
+            market: market
         });
     }
 
@@ -80,16 +62,16 @@ export class BittrexAPI {
      * @param {string} market
      * @param {TickInterval} tickInterval
      *
-     * @return {Promise<IResponse<[ICandle]>>}
+     * @return {Promise<BittrexResponse<Candle[]>>}
      */
-    public getMarketCandles(market: string, tickInterval: TickInterval = 'FiveMin'): Promise<IResponse<[ICandle]>> {
+    public getMarketCandles(market: string, tickInterval: TickInterval = 'FiveMin'): Promise<BittrexResponse<Candle[]>> {
         if (!market) {
             throw Error('Invalid Market');
         }
 
         return this.bittrex.get('v2', '/pub/market/GetTicks', {
             marketName: market,
-            tickInterval: tickInterval,
+            tickInterval: tickInterval
         });
     }
 
@@ -99,25 +81,25 @@ export class BittrexAPI {
      * @param {string} market
      * @param {TickInterval} tickInterval
      *
-     * @return {Promise<IResponse<[ICandle]>>}
+     * @return {Promise<BittrexResponse<Candle[]>>}
      */
-    public getLatestCandle(market: string, tickInterval: TickInterval = 'FiveMin'): Promise<IResponse<[ICandle]>> {
+    public getLatestCandle(market: string, tickInterval: TickInterval = 'FiveMin'): Promise<BittrexResponse<Candle[]>> {
         if (!market) {
             throw Error('Invalid Market');
         }
 
         return this.bittrex.get('v2', '/pub/market/GetLatestTick', {
             marketName: market,
-            tickInterval: tickInterval,
+            tickInterval: tickInterval
         });
     }
 
     /**
      * Gets all market summaries
      *
-     * @return {Promise<IResponse<[IMarketSummary]>>}
+     * @return {Promise<BittrexResponse<MarketSummary[]>>}
      */
-    public getMarketSummaries(): Promise<IResponse<[IMarketSummary]>> {
+    public getMarketSummaries(): Promise<BittrexResponse<MarketSummary[]>> {
         return this.bittrex.get('v1', '/public/getMarketSummaries');
     }
 
@@ -125,35 +107,35 @@ export class BittrexAPI {
      * Gets a single market summary
      *
      * @param {string} market
-     * @return {Promise<IResponse<[IMarketSummary]>>}
+     * @return {Promise<BittrexResponse<MarketSummary[]>>}
      */
-    public getMarketSummary(market: string): Promise<IResponse<[IMarketSummary]>> {
+    public getMarketSummary(market: string): Promise<BittrexResponse<MarketSummary[]>> {
         if (!market) {
             throw Error('Invalid Market');
         }
 
         return this.bittrex.get('v1', '/public/getMarketSummary', {
-            market: market,
+            market: market
         });
     }
 
     /**
-     * Get the orderbook for a market by type (buy, sell or both)
+     * Get the orderbook for a market by type (buy and sell or both)
      * NOTE: The structure is different when selecting just buy or sell
      *
      * @param {string} market
      * @param {OrderBookType} orderBookType
      *
-     * @return {Promise<T>}
+     * @return {Promise<BittrexResponse<OrderbookEntry[] | Orderbook>>}
      */
-    public getOrderbook(market: string, orderBookType: OrderBookType = 'both'): Promise<IResponse<IOrderbook | [IOrderbookEntry]>> {
+    public getOrderbook(market: string, orderBookType: OrderBookType = 'both'): Promise<BittrexResponse<OrderbookEntry[] | Orderbook>> {
         if (!market) {
             throw Error('Invalid Market');
         }
 
         return this.bittrex.get('v1', '/public/getOrderbook', {
             market: market,
-            type: orderBookType,
+            type: orderBookType
         });
     }
 
@@ -161,15 +143,15 @@ export class BittrexAPI {
      * Gets the market history for a market
      *
      * @param {string} market
-     * @return {Promise<IResponse<[ITrade]>>}
+     * @return {Promise<BittrexResponse<Trade[]>>}
      */
-    public getMarketHistory(market: string): Promise<IResponse<[ITrade]>> {
+    public getMarketHistory(market: string): Promise<BittrexResponse<Trade[]>> {
         if (!market) {
             throw Error('Invalid Market');
         }
 
         return this.bittrex.get('v1', '/public/getMarketHistory', {
-            market: market,
+            market: market
         });
     }
 
@@ -180,13 +162,13 @@ export class BittrexAPI {
      * @param {number} quantity
      * @param {number} rate
      *
-     * @return {Promise<IResponse<[IOrderReference]>>}
+     * @return {Promise<BittrexResponse<OrderReference[]>>}
      */
-    public buyLimit(market: string, quantity: number, rate: number): Promise<IResponse<[IOrderReference]>> {
+    public buyLimit(market: string, quantity: number, rate: number): Promise<BittrexResponse<OrderReference[]>> {
         return this.bittrex.getAuthenticated('v1', '/market/buylimit', {
             market: market,
             quantity: quantity,
-            rate: rate,
+            rate: rate
         });
     }
 
@@ -197,13 +179,13 @@ export class BittrexAPI {
      * @param {number} quantity
      * @param {number} rate
      *
-     * @return {Promise<IResponse<[IOrderReference]>>}
+     * @return {Promise<BittrexResponse<OrderReference[]>>}
      */
-    public sellLimit(market: string, quantity: number, rate: number): Promise<IResponse<[IOrderReference]>> {
+    public sellLimit(market: string, quantity: number, rate: number): Promise<BittrexResponse<OrderReference[]>> {
         return this.bittrex.getAuthenticated('v1', '/market/selllimit', {
             market: market,
             quantity: quantity,
-            rate: rate,
+            rate: rate
         });
     }
 
@@ -213,11 +195,11 @@ export class BittrexAPI {
      *
      * @param {string} orderId
      *
-     * @return {Promise<IResponse<[IOrderReference]>>}
+     * @return {Promise<BittrexResponse<OrderReference[]>>}
      */
-    public cancel(orderId: string): Promise<IResponse<[IOrderReference]>> {
+    public cancel(orderId: string): Promise<BittrexResponse<OrderReference[]>> {
         return this.bittrex.getAuthenticated('v1', '/market/cancel', {
-            uuid: orderId,
+            uuid: orderId
         });
     }
 
@@ -227,18 +209,18 @@ export class BittrexAPI {
      *
      * @param {string=} market
      *
-     * @return {Promise<IResponse<[IOpenOrder]>>}
+     * @return {Promise<BittrexResponse<OpenOrder[]>>}
      */
-    public getOpenOrders(market?: string): Promise<IResponse<[IOpenOrder]>> {
+    public getOpenOrders(market?: string): Promise<BittrexResponse<OpenOrder[]>> {
         return this.bittrex.getAuthenticated('v1', '/market/getopenorders', (market ? {market: market} : undefined));
     }
 
     /**
      * Get all balances
      *
-     * @return {Promise<IResponse<[IBalance]>>}
+     * @return {Promise<BittrexResponse<Balance[]>>}
      */
-    public getBalances(): Promise<IResponse<[IBalance]>> {
+    public getBalances(): Promise<BittrexResponse<Balance[]>> {
         return this.bittrex.getAuthenticated('v1', '/account/getbalances');
     }
 
@@ -248,11 +230,11 @@ export class BittrexAPI {
      *
      * @param {string} currency
      *
-     * @return {Promise<IResponse<IBalance>>}
+     * @return {Promise<BittrexResponse<Balance>>}
      */
-    public getBalance(currency: string): Promise<IResponse<IBalance>> {
+    public getBalance(currency: string): Promise<BittrexResponse<Balance>> {
         return this.bittrex.getAuthenticated('v1', '/account/getbalance', {
-            currency: currency,
+            currency: currency
         });
     }
 
@@ -261,10 +243,12 @@ export class BittrexAPI {
      *
      * @param {string} currency
      *
-     * @return {Promise<IResponse<IBalance>>}
+     * @return {Promise<BittrexResponse<Balance>>}
      */
-    public getWithdrawalHistory(currency?: string): Promise<IResponse<IBalance>> {
-        return this.bittrex.getAuthenticated('v1', '/account/getwithdrawalhistory', (currency ? {currency: currency} : undefined));
+    public getWithdrawalHistory(currency?: string): Promise<BittrexResponse<Balance>> {
+        return this.bittrex.getAuthenticated('v1', '/account/getwithdrawalhistory',
+            currency ? { currency: currency } : undefined
+        );
     }
 
     /**
@@ -272,9 +256,9 @@ export class BittrexAPI {
      *
      * @param {string} currency
      *
-     * @return {Promise<IResponse<IDepositAddress>>}
+     * @return {Promise<BittrexResponse<DepositAddress>>}
      */
-    public getDepositAddress(currency: string): Promise<IResponse<IDepositAddress>> {
+    public getDepositAddress(currency: string): Promise<BittrexResponse<DepositAddress>> {
         return this.bittrex.getAuthenticated('v1', '/account/getdepositaddress', {
             currency: currency,
         });
@@ -285,9 +269,9 @@ export class BittrexAPI {
      *
      * @param {string} currency
      *
-     * @return {Promise<IResponse<[IDeposit]>>}
+     * @return {Promise<BittrexResponse<Deposit[]>>}
      */
-    public getDepositHistory(currency?: string): Promise<IResponse<[IDeposit]>> {
+    public getDepositHistory(currency?: string): Promise<BittrexResponse<Deposit[]>> {
         return this.bittrex.getAuthenticated('v1', '/account/getDepositHistory', (currency ? {currency: currency} : undefined));
     }
 
@@ -296,10 +280,12 @@ export class BittrexAPI {
      *
      * @param {string} market
      *
-     * @return {Promise<IResponse<[IOrder]>>}
+     * @return {Promise<BittrexResponse<Order[]>>}
      */
-    public getOrderHistory(market?: string): Promise<IResponse<[IOrder]>> {
-        return this.bittrex.getAuthenticated('v1', '/account/getOrderHistory', (market ? {market: market} : undefined));
+    public getOrderHistory(market?: string): Promise<BittrexResponse<Order[]>> {
+        return this.bittrex.getAuthenticated('v1', '/account/getOrderHistory',
+            (market ? {market: market} : undefined)
+        );
     }
 
     //TODO: normalize orders, they differ too much between orderhistory, getOrder and openOrders.
@@ -308,9 +294,9 @@ export class BittrexAPI {
      *
      * @param {string} orderId
      *
-     * @return {Promise<IResponse<[IOrderSingle]>>}
+     * @return {Promise<BittrexResponse<OrderSingle[]>>}
      */
-    public getOrder(orderId: string): Promise<IResponse<[IOrderSingle]>> {
+    public getOrder(orderId: string): Promise<BittrexResponse<OrderSingle[]>> {
         return this.bittrex.getAuthenticated('v1', '/account/getOrder', {
             uuid: orderId,
         });
@@ -322,11 +308,11 @@ export class BittrexAPI {
      * @param {string} currency
      * @param {number} quantity
      * @param {string} address
-     * @param {string=} paymentid
+     * @param {string=} paymentid An optional identifier
      *
-     * @return {Promise<IResponse<IOrderReference>>}
+     * @return {Promise<BittrexResponse<OrderReference>>}
      */
-    public withdraw(currency: string, quantity: number, address: string, paymentid?: string): Promise<IResponse<IOrderReference>> {
+    public withdraw(currency: string, quantity: number, address: string, paymentid?: string): Promise<BittrexResponse<OrderReference>> {
         return this.bittrex.getAuthenticated('v1', '/account/withdraw', {
             currency: currency,
             quantity: quantity,

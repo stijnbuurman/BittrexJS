@@ -1,7 +1,7 @@
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export interface IWithdrawal {
+interface Withdrawal {
     "PaymentUuid" : string,
     "Currency" : string,
     "Amount" : number,

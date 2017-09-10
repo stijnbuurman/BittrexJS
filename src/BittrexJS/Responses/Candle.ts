@@ -1,12 +1,13 @@
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export interface ICandle {
+interface Candle {
+    T: string,
     O: number,
+    C: number,
     H: number,
     L: number,
-    C: number,
     V: number,
-    T: string,
     BV: number,
 }
+

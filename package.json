@@ -1,5 +1,5 @@
 {
-  "name": "bittrex.ts",
+  "name": "bittrexjs",
   "version": "0.0.2",
   "description": "BittrexJS - typescript based library for the Bittrex API https://bittrex.com/",
   "main": "lib/BittrexJS.js",
@@ -23,16 +23,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/stijnbuurman/bittrexJS"
+    "url": "https://github.com/stijnbuurman/BittrexJS"
   },
   "engines": {
     "node": ">=6.0"
   },
   "bugs": {
-    "url": "https://github.com/stijnbuurman/bittrexJS/issues",
+    "url": "https://github.com/stijnbuurman/BittrexJS/issues",
     "email": "stijnbuurman@gmail.com"
   },
-  "homepage": "https://github.com/stijnbuurman/bittrexJS",
+  "homepage": "https://github.com/stijnbuurman/BittrexJS",
   "scripts": {
     "test": "mocha"
   },

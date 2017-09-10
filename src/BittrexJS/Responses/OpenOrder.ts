@@ -1,8 +1,7 @@
-import {OrderType} from '../Enums/OrderType';
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export interface IOpenOrder {
+interface OpenOrder {
     Uuid?: string | null,
     OrderUuid: string,
     Exchange: string,

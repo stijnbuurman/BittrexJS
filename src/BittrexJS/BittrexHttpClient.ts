@@ -1,27 +1,25 @@
-import request = require('request');
-import assign = require('object-assign');
-import hmac_sha512 = require('./hmac-sha512.js');
-import {IRequestOptions} from './interfaces/IRequestOptions';
-import {IApiCredentials} from './interfaces/IApiCredentials';
+import * as request from 'request';
+import * as assign from 'object-assign';
+const hmac_sha512 = require("crypto-js/hmac-sha512");
 
 export class BittrexHttpClient {
-    private requestOptions: IRequestOptions = {
+    private requestOptions: RequestOptions = {
         method: 'GET',
         agent: false,
         headers: {
-            'User-Agent': 'Mozilla/4.0 (compatible; TS Bittrex API)',
-            'Content-type': 'application/x-www-form-urlencoded'
+            'User-Agent': 'Mozilla/4.0 (compatible; TS BittrexJS API)',
+            'Content-type': 'application/x-www-form-urlencoded',
         },
-        uri: null
+        uri: null,
     };
 
-    private apiCredentials: IApiCredentials;
+    private apiCredentials: ApiCredentials;
 
     private readonly API_URL_V1 = 'https://bittrex.com/api/v1.1';
     private readonly API_URL_V2 = 'https://bittrex.com/Api/v2.0';
 
 
-    public authenticate(apiCredentials: IApiCredentials): BittrexHttpClient {
+    public authenticate(apiCredentials: ApiCredentials): BittrexHttpClient {
         this.apiCredentials = apiCredentials;
 
         return this;
@@ -40,7 +38,7 @@ export class BittrexHttpClient {
                     success: false,
                     message: 'URL request error',
                     error: error,
-                    result: result
+                    result: result,
                 };
                 return callback(null, errorObject);
             }
@@ -54,31 +52,31 @@ export class BittrexHttpClient {
         });
     };
 
-    private sendRequest(requestOptions) {
+    private sendRequest(requestOptions): Promise<BittrexResponse<any>> {
         return new Promise((resolve, reject) => {
             request(requestOptions, (error, result, body) => {
                 if (!body || !result || result.statusCode != 200) {
-                    let errorObject = {
+                    let errorObject: BittrexResponse<any> = {
                         success: false,
                         message: 'URL request error',
                         error: error,
-                        result: result
+                        result: result,
                     };
 
                     reject(errorObject);
                 }
 
-                result = JSON.parse(body);
-                if (!result.success) {
-                    reject(result);
+                let parsedResult: BittrexResponse<any> = JSON.parse(body);
+                if (!parsedResult.success) {
+                    reject(parsedResult);
                 }
 
-                resolve(result);
+                resolve(parsedResult);
             });
         });
     }
 
-    get(versionString, path, options?) {
+    get(versionString, path, options?): Promise<BittrexResponse<any>> {
         let url = this.getBaseUrl(versionString) + path;
 
         let requestOptions = assign({}, this.requestOptions);
@@ -92,7 +90,7 @@ export class BittrexHttpClient {
         return this.sendRequest(requestOptions);
     };
 
-    getAuthenticated(versionString, path, options?) {
+    getAuthenticated(versionString, path, options?): Promise<BittrexResponse<any>> {
         if(!this.apiCredentials){
             throw new Error('Authentication is needed. Call BittrexApi.authenticate(apiCredentials) first.');
         }
@@ -101,7 +99,7 @@ export class BittrexHttpClient {
 
         url = url + '?' + this.getQueryString({
                 apikey: this.apiCredentials.apikey,
-                nonce: Math.floor(new Date().getTime() / 1000)
+                nonce: Math.floor(new Date().getTime() / 1000),
             });
 
         if (options) {
@@ -115,6 +113,13 @@ export class BittrexHttpClient {
         return this.sendRequest(requestOptions);
     };
 
+    /**
+     * Get base url by versionString, options: V1 or V2
+     *
+     * @param {string} versionString
+     *
+     * @return {string}
+     */
     getBaseUrl(versionString: string) {
         if (versionString === 'v1') {
             return this.API_URL_V1;

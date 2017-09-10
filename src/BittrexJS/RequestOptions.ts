@@ -1,7 +1,7 @@
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export interface IRequestOptions {
+interface RequestOptions {
     method: string,
     agent: boolean,
     headers: {
@@ -9,5 +9,5 @@ export interface IRequestOptions {
         'Content-type': string,
         'apisign'?: string,
     },
-    uri: string
+    uri: string,
 }

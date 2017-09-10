@@ -1,7 +1,7 @@
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export interface IMarket {
+interface Market {
     MarketCurrency: string,
     BaseCurrency: string,
     MarketCurrencyLong: string,

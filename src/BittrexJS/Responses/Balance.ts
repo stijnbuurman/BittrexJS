@@ -1,7 +1,7 @@
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export interface IBalance {
+interface Balance {
     Currency: string,
     Balance: number,
     Available: number,

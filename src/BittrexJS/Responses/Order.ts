@@ -1,9 +1,7 @@
-import {OrderCondition} from '../Enums/OrderCondition';
-import {OrderType} from '../Enums/OrderType';
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export interface IOrder {
+interface Order {
     OrderUuid: string,
     Exchange: string,
     TimeStamp: string,
@@ -15,13 +13,13 @@ export interface IOrder {
     Price: number,
     PricePerUnit: number,
     IsConditional: boolean,
-    Condition: OrderCondition,
+    Condition: string,
     ConditionTarget: any | null,
     ImmediateOrCancel: boolean,
     Closed: string
 }
 
-export interface IOrderSingle {
+interface OrderSingle {
     AccountId: string | null,
     OrderUuid: string,
     Exchange: string,
