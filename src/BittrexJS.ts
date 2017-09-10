@@ -3,7 +3,7 @@ import {BittrexHttpClient} from './BittrexHttpClient';
 /**
  * Created by stijnbuurman on 02-09-17.
  */
-export class BittrexAPI {
+class Client {
     private bittrex: BittrexHttpClient;
 
     constructor() {
@@ -15,7 +15,7 @@ export class BittrexAPI {
      *
      * @param {ApiCredentials} apiCredentials
      *
-     * @return {BittrexAPI}
+     * @return {Client}
      */
     public authenticate(apiCredentials: ApiCredentials): this {
         this.bittrex.authenticate(apiCredentials);
@@ -321,3 +321,5 @@ export class BittrexAPI {
         });
     }
 }
+
+export { Client };

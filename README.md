@@ -13,13 +13,13 @@ npm install bittrexjs
 
 ## Example
 ```javascript
-import {BittrexAPI} from 'BittrexJS';
+let BittrexClient = require('bittrexjs').Client;
 
-let bittrex = new BittrexAPI();
+let bittrex = new BittrexClient();
 
 bittrex.getCurrencies().then((response) => {
     let currencies = response.result;
-    
+
     console.log(currencies);
 });
 ```
