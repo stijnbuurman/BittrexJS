@@ -19,7 +19,8 @@
   "license": "MIT",
   "dependencies": {
     "object-assign": "^4.1.1",
-    "request": ">= 2.35.0"
+    "request": ">= 2.35.0",
+    "crypto-js": "^3.1.9-1"
   },
   "repository": {
     "type": "git",
@@ -41,7 +42,6 @@
     "@types/object-assign": "^4.0.30",
     "@types/request": "^2.0.3",
     "browserify": "^14.4.0",
-    "crypto-js": "^3.1.9-1",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
