@@ -243,9 +243,9 @@ class Client {
      *
      * @param {string} currency
      *
-     * @return {Promise<BittrexResponse<Balance>>}
+     * @return {Promise<BittrexResponse<Withdrawal[]>>}
      */
-    public getWithdrawalHistory(currency?: string): Promise<BittrexResponse<Balance>> {
+    public getWithdrawalHistory(currency?: string): Promise<BittrexResponse<Withdrawal[]>> {
         return this.bittrex.getAuthenticated('v1', '/account/getwithdrawalhistory',
             currency ? { currency: currency } : undefined
         );
